@@ -197,7 +197,7 @@
     
 </head>
 
-<link rel="icone" href="image/icone.png" type="image/png">
+<link rel="icon" href="image/icone.png" type="image/png">
 
 <body class="dark-mode">
     <div class="mode-switch" onclick="toggleMode()">🌙</div>
@@ -227,7 +227,7 @@
             }
 
             const qrImage = document.getElementById("qr-image");
-            const url = `https://api.qrserver.com/v1/create-qr-code/?size=400x400&data=${qrValue}`;
+            const url = `https://api.qrserver.com/v1/create-qr-code/?size=500x500&data=${qrValue}`;
             qrImage.src = url;
 
             document.getElementById("download-btn").style.display = 'block';
@@ -236,7 +236,7 @@
         function downloadQRCode() {
             const qrImage = document.getElementById("qr-image");
 
-            if (!qrImage.src || qrImage.src === "image/image.png") {
+            if (!qrImage.src || qrImage.src.includes("image/image.png")) {
                 alert("Veuillez d'abord générer un code QR.");
                 return;
             }
@@ -249,11 +249,14 @@
                 return;
             }
 
-            const link = document.createElement("a+");
+            const link = document.createElement("a");
             link.href = qrDataUrl;
-            link.download = "VladQR-" + fileName + ".png"; 
 
+            link.download = "VLADQR-${fileName}.png";
+
+            document.body.appendChild(link); 
             link.click();
+            document.body.removeChild(link);
         }
 
 
