@@ -25,39 +25,36 @@
         
         
         .qr-code-container img {
-    width: 400px; 
-    height: 400px;
-    object-fit: contain;
-    border-radius: 12px;  
-    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);  
-    border: 4px solid #00e5ff;  
-    transition: transform 0.3s ease, box-shadow 0.3s ease;  
-}
+            width: 400px; 
+            height: 400px;
+            object-fit: contain;
+            border-radius: 12px;  
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);  
+            border: 4px solid #00e5ff;  
+            transition: transform 0.3s ease, box-shadow 0.3s ease;  
+        }
 
-.qr-code-container img:hover {
-    transform: scale(1.1);  
-    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.5);  
-}
-
-
-        
-.qr-code-container {
-    margin-top: 20px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-}
-
-.qr-code-container img {
-    width: 120px; 
-    height: 120px;  
-    object-fit: cover; 
-    border-radius: 50%; 
-    border: 2px solid #ccc; 
-}
+        .qr-code-container img:hover {
+            transform: scale(1.1);  
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.5);  
+        }
 
 
-        
+                
+        .qr-code-container {
+            margin-top: 20px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .qr-code-container img {
+            width: 120px; 
+            height: 120px;  
+            object-fit: cover; 
+            border-radius: 50%; 
+            border: 2px solid #ccc; 
+        }
 
         .container {
             border-radius: 10px;
@@ -182,7 +179,7 @@
         }
 
         button.light-mode {
-            background-color: #4caf50;
+            background-color: #00e5ff;
             color: #fff;
         }
 
@@ -193,15 +190,20 @@
         }
 
         .container {
-            animation: fadeIn 0.5s ease-in-out;
+            animation: fadeIn 0.05s ease-in-out;
         }
     </style>
+    
+    
 </head>
+
+<link rel="icon" href="image/icone.png" type="image/png">
+
 <body class="dark-mode">
     <div class="mode-switch" onclick="toggleMode()">🌙</div>
     <div class="container">
         <h1>VLADCRACK</h1>
-        <h1>Générateur de code QR</h1>
+        <h1>VLAD-QR Generator</h1>
         <div class="input-group">
             <input type="text" id="qr-input" placeholder="Enter URL or Text">
         </div>
@@ -209,6 +211,8 @@
         <div class="qr-code-container">
             <img id="qr-image" src="image/image.png" alt="QR Code">
         </div>
+        <!-- Bouton de téléchargement, caché initialement -->
+        <button id="download-btn" style="display:none;" onclick="downloadQRCode()">Télécharger le Code QR</button>
     </div>
 
     <script>
@@ -221,9 +225,35 @@
             }
 
             const qrImage = document.getElementById("qr-image");
-            const url = `https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=${qrValue}`;
+            const url = `https://api.qrserver.com/v1/create-qr-code/?size=400x400&data=${qrValue}`;
             qrImage.src = url;
+
+            document.getElementById("download-btn").style.display = 'block';
         }
+
+        function downloadQRCode() {
+            const qrImage = document.getElementById("qr-image");
+
+            if (!qrImage.src || qrImage.src === "image/image.png") {
+                alert("Veuillez d'abord générer un code QR.");
+                return;
+            }
+
+            const qrDataUrl = qrImage.src;
+
+            const fileName = prompt("Entrez le nom du fichier (sans extension)", "CodeQR");
+            if (!fileName) {
+                alert("Le nom de fichier est requis.");
+                return;
+            }
+
+            const link = document.createElement("a+");
+            link.href = qrDataUrl;
+            link.download = "VladQR-" + fileName + ".png"; 
+
+            link.click();
+        }
+
 
         function toggleMode() {
             const body = document.body;
@@ -232,7 +262,6 @@
             const button = document.querySelector('button');
             const icon = document.querySelector('.mode-switch');
 
-            // Toggle between dark and light modes
             body.classList.toggle('dark-mode');
             body.classList.toggle('light-mode');
             container.classList.toggle('dark-mode');
@@ -242,7 +271,6 @@
             button.classList.toggle('dark-mode');
             button.classList.toggle('light-mode');
 
-            // Change icon based on mode
             if (body.classList.contains('dark-mode')) {
                 icon.textContent = "🌞"; 
             } else {
@@ -252,4 +280,3 @@
     </script>
 </body>
 </html>
-
