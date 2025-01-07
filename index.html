@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Générateur de code QR</title>
+    <title>VLAD-QR Generator</title>
     <style type="text/css">
         * {
             box-sizing: border-box;
@@ -203,14 +203,16 @@
     <div class="mode-switch" onclick="toggleMode()">🌙</div>
     <div class="container">
         <h1>VLADCRACK</h1>
-        <h1>VLAD-QR Generator</h1>
+        <h2>Générateur de code QR</h2>
+        </br>
         <div class="input-group">
-            <input type="text" id="qr-input" placeholder="Enter URL or Text">
+            <input type="text" id="qr-input" placeholder="Entrer une URL ou du Texte">
         </div>
         <button id="generate-qr" onclick="generateQRCode()">Générer le Code QR </button>
         <div class="qr-code-container">
             <img id="qr-image" src="image/image.png" alt="QR Code">
         </div>
+        </br>
         <!-- Bouton de téléchargement, caché initialement -->
         <button id="download-btn" style="display:none;" onclick="downloadQRCode()">Télécharger le Code QR</button>
     </div>
